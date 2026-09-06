@@ -1,18 +1,70 @@
 @import "tailwindcss";
 
+/* ── 字体自托管 ──
+   完整子集 444KB 走 swap 异步加载；首屏那 26KB 的关键子集在它到位之前顶上，
+   避免书法体阻塞 LCP。字体栈后半段留了系统楷体与宋体兜底。 */
+
+@font-face {
+  font-family: "Ma Shan Zheng";
+  src: url("../assets/fonts/MaShanZheng.subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ma Shan Zheng Critical";
+  src: url("../assets/fonts/MaShanZheng.critical.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Noto Serif SC";
+  src: url("../assets/fonts/NotoSerifSC.subset.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-display: "Ma Shan Zheng", cursive;
-  --font-body: "Noto Serif SC", serif;
+  --font-display: "Ma Shan Zheng", "Ma Shan Zheng Critical", "STKaiti", "KaiTi", serif;
+  --font-body: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
+
+  /* 墨与纸 */
   --color-ink: #0c0f0d;
+  --color-ink-deep: #0a0d0c;
+  --color-ink-panel: #141a17;
+  --color-ink-raised: #1c2420;
   --color-parchment: #e8dcc8;
   --color-parchment-dim: #c9b99a;
+
+  /* 朱砂 */
   --color-cinnabar: #b83a2a;
   --color-cinnabar-glow: #d45a3a;
+
+  /* 青玉 */
   --color-jade: #2d5a4a;
   --color-jade-light: #4a8a72;
+
+  /* 描金。gold-dim 已提亮到过 WCAG AA，用于小字也看得清 */
   --color-gold: #c9a227;
-  --color-gold-dim: #8a7020;
-  --color-mist: #6a7a72;
+  --color-gold-dim: #a8842a;
+  --color-gold-soft: #b89a4c;
+  --color-gold-sheen: #fff0c8;
+
+  /* 雾灰。原 #6a7a72 在墨底上只有 3.4:1，提亮后约 6.2:1 */
+  --color-mist: #8a9a90;
+
+  --shadow-panel: 0 4px 30px rgb(0 0 0 / 0.3);
+  --shadow-panel-sm: 0 4px 20px rgb(0 0 0 / 0.25);
+  --shadow-lift: 0 8px 24px rgb(0 0 0 / 0.5);
+  --shadow-glow-cinnabar: 0 0 20px rgb(184 58 42 / 0.2);
+
+  /* 宣纸纹理：纸浆颗粒 + 横向纤维，180px 平铺 */
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  --texture-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015 0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23f)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -51,16 +103,16 @@ button {
 
 input::placeholder {
   color: var(--color-mist);
-  opacity: 1;
+  opacity: 0.7;
 }
 
 select {
   color-scheme: dark;
-  background-color: #141a17;
+  background-color: var(--color-ink-panel);
 }
 
 select option {
-  background-color: #141a17;
+  background-color: var(--color-ink-panel);
   color: var(--color-parchment);
 }
 
@@ -71,14 +123,29 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+/* 底色：墨色在宣纸上晕开的三层渐变，比原来的两团光晕更沉 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(45, 90, 74, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(184, 58, 42, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 18% -5%, rgba(45, 90, 74, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 105%, rgba(184, 58, 42, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 45%, rgba(201, 162, 39, 0.04) 0%, transparent 60%),
     linear-gradient(180deg, #0a0d0c 0%, #121816 50%, #0c0f0d 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 纸纹：颗粒与纤维两层叠加，overlay 混合后只留极淡的起伏 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--texture-grain), var(--texture-fiber);
+  background-repeat: repeat, repeat;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
   pointer-events: none;
   z-index: 0;
 }
@@ -124,12 +191,6 @@ body::before {
   100% { opacity: 0; transform: translateY(-30px); }
 }
 
-@keyframes breakthrough-flash {
-  0% { opacity: 0; }
-  15% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @keyframes bar-glow {
   0% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0); }
   50% { box-shadow: 0 0 12px 3px rgba(201, 162, 39, 0.4); }
@@ -139,6 +200,17 @@ body::before {
 @keyframes milestone-enter {
   0% { opacity: 0; transform: scale(0.8) translateY(20px); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-up {
@@ -162,16 +234,105 @@ body::before {
   pointer-events: none;
 }
 
-.animate-breakthrough {
-  animation: breakthrough-flash 1.5s ease-out forwards;
-}
-
 .animate-bar-glow {
   animation: bar-glow 1s ease-out;
 }
 
 .animate-milestone-enter {
   animation: milestone-enter 0.4s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out both;
+}
+
+/* ── 突破：金光自牌面中心向外扩散，替代原来的整块闪白 ── */
+
+@keyframes breakthrough-burst {
+  0% {
+    opacity: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(240, 208, 96, 0.55) 0%, transparent 0%);
+  }
+  35% {
+    opacity: 1;
+    background: radial-gradient(circle at 50% 50%, rgba(240, 208, 96, 0.45) 0%, rgba(201, 162, 39, 0.12) 45%, transparent 70%);
+  }
+  100% {
+    opacity: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(240, 208, 96, 0) 0%, transparent 100%);
+  }
+}
+
+.animate-breakthrough {
+  animation: breakthrough-burst 1.5s ease-out forwards;
+}
+
+/* ── 叙事文字：按句浮现，墨迹一行行渗出来 ── */
+
+@keyframes ink-bleed {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.ink-line {
+  display: block;
+  animation: ink-bleed 0.5s ease-out both;
+  animation-delay: var(--ink-delay, 0ms);
+}
+
+/* ── 灵气：缓慢上浮的微光点 ── */
+
+@keyframes spirit-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  12% { opacity: 0.55; }
+  85% { opacity: 0.3; }
+  100% { transform: translate3d(0, -160px, 0); opacity: 0; }
+}
+
+.spirit-motes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.spirit-motes::before,
+.spirit-motes::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: transparent;
+  will-change: transform, opacity;
+}
+
+.spirit-motes::before {
+  box-shadow:
+    12% 0 0 0 rgba(74, 138, 114, 0.55),
+    38% -60px 0 0 rgba(201, 162, 39, 0.35),
+    64% -120px 0 0 rgba(74, 138, 114, 0.42),
+    88% -30px 0 0 rgba(201, 162, 39, 0.3);
+  animation: spirit-rise 11s linear infinite;
+}
+
+.spirit-motes::after {
+  box-shadow:
+    22% -20px 0 0 rgba(201, 162, 39, 0.32),
+    52% -90px 0 0 rgba(74, 138, 114, 0.38),
+    76% -150px 0 0 rgba(201, 162, 39, 0.28);
+  animation: spirit-rise 15s linear infinite 4s;
 }
 
 @keyframes title-shimmer {
@@ -206,7 +367,7 @@ body::before {
 
 .log-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(74, 138, 114, 0.45) transparent;
+  scrollbar-color: color-mix(in srgb, var(--color-jade-light) 45%, transparent) transparent;
 }
 
 .log-scroll::-webkit-scrollbar {
@@ -214,34 +375,8 @@ body::before {
 }
 
 .log-scroll::-webkit-scrollbar-thumb {
-  background: rgba(74, 138, 114, 0.45);
+  background: color-mix(in srgb, var(--color-jade-light) 45%, transparent);
   border-radius: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-fade-up,
-  .animate-pulse-glow,
-  .animate-stat-gain,
-  .animate-stat-loss,
-  .animate-float-up,
-  .animate-breakthrough,
-  .animate-bar-glow,
-  .animate-milestone-enter,
-  .animate-slide-up {
-    animation: none;
-  }
-
-  .title-shimmer {
-    animation: none;
-    background: var(--color-gold);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .log-scroll {
-    scroll-behavior: auto;
-  }
 }
 
 @media (max-width: 639px) {
@@ -250,28 +385,13 @@ body::before {
   }
 }
 
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up {
-  animation: slide-up 0.3s ease-out both;
-}
-
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* ── 装饰性元素 ── */
 
-/* 古卷面板：四角描金 */
+/* 古卷面板：四角描金。只留给主叙事面板与起始页，其余面板不再叠装饰 */
 .scroll-panel {
   position: relative;
 }
@@ -316,7 +436,7 @@ body::before {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(138, 112, 32, 0.4) 50%,
+    color-mix(in srgb, var(--color-gold-dim) 40%, transparent) 50%,
     transparent
   );
 }
@@ -349,15 +469,15 @@ body::before {
 .stat-card {
   position: relative;
   background:
-    linear-gradient(180deg, rgba(45, 90, 74, 0.08) 0%, rgba(0, 0, 0, 0.25) 100%);
-  border: 1px solid rgba(74, 138, 114, 0.18);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-jade) 8%, transparent) 0%, rgb(0 0 0 / 0.25) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-jade-light) 18%, transparent);
   transition: border-color 0.25s ease, background 0.25s ease;
 }
 
 .stat-card:hover {
-  border-color: rgba(201, 162, 39, 0.35);
+  border-color: color-mix(in srgb, var(--color-gold) 35%, transparent);
   background:
-    linear-gradient(180deg, rgba(201, 162, 39, 0.06) 0%, rgba(0, 0, 0, 0.25) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-gold) 6%, transparent) 0%, rgb(0 0 0 / 0.25) 100%);
 }
 
 /* 标题装饰：左右双线 */
@@ -381,7 +501,7 @@ body::before {
   opacity: 0.5;
 }
 
-/* 微弱浮云纹理（用于主要面板） */
+/* 面板底：云雾 + 纸纹叠加 */
 .mist-overlay {
   position: relative;
 }
@@ -391,8 +511,11 @@ body::before {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 15% 20%, rgba(74, 138, 114, 0.05) 0%, transparent 35%),
-    radial-gradient(circle at 85% 80%, rgba(201, 162, 39, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--color-jade-light) 5%, transparent) 0%, transparent 35%),
+    radial-gradient(circle at 85% 80%, color-mix(in srgb, var(--color-gold) 4%, transparent) 0%, transparent 40%),
+    var(--texture-grain);
+  background-blend-mode: normal, normal, overlay;
+  opacity: 0.9;
   pointer-events: none;
   border-radius: inherit;
 }
@@ -407,7 +530,6 @@ body::before {
   padding: 0.2rem 0.55rem;
   border-radius: 9999px;
   border-width: 1px;
-  line-height: 1;
   line-height: 1.2;
   font-family: var(--font-body);
   user-select: none;
@@ -425,59 +547,56 @@ body::before {
   padding: 0.25rem 0.65rem;
 }
 
-/* ── outlined 版本 ── */
 .badge-jade {
-  border-color: rgba(74, 138, 114, 0.5);
+  border-color: color-mix(in srgb, var(--color-jade-light) 50%, transparent);
   color: var(--color-jade-light);
-  background: rgba(45, 90, 74, 0.12);
+  background: color-mix(in srgb, var(--color-jade) 12%, transparent);
 }
 
 .badge-gold {
-  border-color: rgba(201, 162, 39, 0.5);
+  border-color: color-mix(in srgb, var(--color-gold) 50%, transparent);
   color: var(--color-gold);
-  background: rgba(201, 162, 39, 0.1);
+  background: color-mix(in srgb, var(--color-gold) 10%, transparent);
 }
 
 .badge-cinnabar {
-  border-color: rgba(184, 58, 42, 0.5);
+  border-color: color-mix(in srgb, var(--color-cinnabar) 50%, transparent);
   color: var(--color-cinnabar-glow);
-  background: rgba(184, 58, 42, 0.12);
+  background: color-mix(in srgb, var(--color-cinnabar) 12%, transparent);
 }
 
 .badge-mist {
-  border-color: rgba(106, 122, 114, 0.3);
+  border-color: color-mix(in srgb, var(--color-mist) 30%, transparent);
   color: var(--color-parchment-dim);
-  background: rgba(106, 122, 114, 0.1);
+  background: color-mix(in srgb, var(--color-mist) 10%, transparent);
 }
 
-/* hover 描边增亮 */
 .badge:hover {
   opacity: 0.9;
 }
 
-/* 实心版本 (带描边 + 底色更浓郁 */
 .badge-solid-jade {
   border-color: var(--color-jade-light);
   color: var(--color-ink);
-  background: linear-gradient(135deg, var(--color-jade-light), rgba(74, 138, 114, 0.8));
+  background: linear-gradient(135deg, var(--color-jade-light), color-mix(in srgb, var(--color-jade-light) 80%, transparent));
 }
 
 .badge-solid-gold {
   border-color: var(--color-gold);
   color: var(--color-ink);
-  background: linear-gradient(135deg, var(--color-gold), rgba(201, 162, 39, 0.8));
+  background: linear-gradient(135deg, var(--color-gold), color-mix(in srgb, var(--color-gold) 80%, transparent));
 }
 
 .badge-solid-cinnabar {
   border-color: var(--color-cinnabar-glow);
   color: var(--color-ink);
-  background: linear-gradient(135deg, var(--color-cinnabar-glow), rgba(212, 90, 58, 0.85));
+  background: linear-gradient(135deg, var(--color-cinnabar-glow), color-mix(in srgb, var(--color-cinnabar-glow) 85%, transparent));
 }
 
 .badge-solid-mist {
   border-color: var(--color-mist);
   color: var(--color-ink);
-  background: linear-gradient(135deg, var(--color-mist), rgba(106, 122, 114, 0.8));
+  background: linear-gradient(135deg, var(--color-mist), color-mix(in srgb, var(--color-mist) 80%, transparent));
 }
 
 /* 进度条流光 */
@@ -493,7 +612,7 @@ body::before {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 240, 200, 0.25) 50%,
+    color-mix(in srgb, var(--color-gold-sheen) 25%, transparent) 50%,
     transparent 100%
   );
   transform: translateX(-100%);
@@ -505,8 +624,114 @@ body::before {
   60%, 100% { transform: translateX(100%); }
 }
 
+/* ── 选项：hover 时一道墨迹自中心向两侧洇开 ── */
+
+.choice-ink {
+  position: relative;
+  isolation: isolate;
+}
+
+.choice-ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-jade) 28%, transparent) 50%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.choice-ink:hover::before,
+.choice-ink:focus-visible::before {
+  transform: scaleX(1);
+}
+
+/* ── 心魔侵蚀：边框缓慢渗出墨色 ── */
+
+@keyframes demon-creep {
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(184, 58, 42, 0); }
+  50% { box-shadow: inset 0 0 22px 0 rgba(184, 58, 42, 0.18); }
+}
+
+.animate-demon-creep {
+  animation: demon-creep 3.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-pulse-glow,
+  .animate-stat-gain,
+  .animate-stat-loss,
+  .animate-float-up,
+  .animate-breakthrough,
+  .animate-bar-glow,
+  .animate-milestone-enter,
+  .animate-slide-up,
+  .animate-demon-creep,
+  .animate-pulse-cinnabar,
+  .ink-line,
+  .spirit-motes::before,
+  .spirit-motes::after,
   .bar-shimmer::after {
     animation: none;
   }
+
+  .ink-line {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .spirit-motes {
+    display: none;
+  }
+
+  .title-shimmer {
+    animation: none;
+    background: var(--color-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .log-scroll {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── 选项序号：hover 时随墨迹一同转为描金 ── */
+.group:hover .badge-jade {
+  border-color: color-mix(in srgb, var(--color-gold) 50%, transparent);
+  color: var(--color-gold);
+  background: color-mix(in srgb, var(--color-gold) 10%, transparent);
+}
+
+/* ── 寿元将尽：朱砂脉动 ── */
+@keyframes pulse-cinnabar {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 58, 42, 0); }
+  50% { box-shadow: 0 0 16px 2px rgba(184, 58, 42, 0.22); }
+}
+
+.animate-pulse-cinnabar {
+  animation: pulse-cinnabar 2.4s ease-in-out infinite;
+}
+
+/* ── 主题切换口子 ──
+   将来要加“敦煌 / 玄霓”，只需在此追加 [data-theme="xxx"] 覆盖 token 即可，
+   全站工具类都引用 var(--color-*)，会自动跟着变。 */
+[data-theme="dunhuang"] {
+  --color-ink: #1c130b;
+  --color-ink-deep: #140d07;
+  --color-ink-panel: #2a1c10;
+  --color-jade: #3f6b4a;
+  --color-gold: #e0a93b;
+  --color-cinnabar: #c0432a;
+  --color-parchment: #f0e2c4;
+  --color-mist: #9c8b6e;
 }

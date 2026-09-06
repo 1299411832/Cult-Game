@@ -32,8 +32,8 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
     <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12 relative overflow-hidden safe-bottom">
       {/* 背景装饰 */}
       <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-[var(--color-jade)]/[0.04] blur-3xl" />
-        <div className="absolute bottom-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-[var(--color-cinnabar)]/[0.03] blur-3xl" />
+        <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-jade/[0.04] blur-3xl" />
+        <div className="absolute bottom-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-cinnabar/[0.03] blur-3xl" />
       </div>
 
       {/* 右上角按钮 */}
@@ -41,8 +41,8 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
         <button
           type="button"
           onClick={() => setShowCodex(true)}
-          className="text-sm text-[var(--color-mist)] hover:text-[var(--color-gold)] transition-colors cursor-pointer
-            border border-[var(--color-mist)]/20 hover:border-[var(--color-gold)]/40 px-3 py-1.5 rounded-sm"
+          className="text-sm text-mist hover:text-gold transition-colors cursor-pointer
+            border border-mist/20 hover:border-gold/40 px-3 py-1.5 rounded-sm"
         >
           修仙志
         </button>
@@ -50,7 +50,7 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
           type="button"
           onClick={onToggleSound}
           aria-label={soundOn ? '关闭音效' : '开启音效'}
-          className="text-sm text-[var(--color-mist)] hover:text-[var(--color-gold)] transition-colors cursor-pointer"
+          className="text-sm text-mist hover:text-gold transition-colors cursor-pointer"
         >
           {soundOn ? '🔔' : '🔕'}
         </button>
@@ -59,9 +59,9 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
       {/* 主标题区域 */}
       <div className="text-center max-w-lg mb-10 animate-fade-up relative z-10">
         <div className="flex items-center justify-center gap-4 mb-5">
-          <span className="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-gold)]/40" />
-          <p className="text-[var(--color-gold-dim)] text-xs tracking-[0.5em] uppercase">天道渺渺 · 仙途漫漫</p>
-          <span className="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-gold)]/40" />
+          <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/40" />
+          <p className="text-gold-dim text-xs tracking-[0.5em] uppercase">天道渺渺 · 仙途漫漫</p>
+          <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/40" />
         </div>
 
         <h1
@@ -71,13 +71,13 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
           修仙模拟器
         </h1>
 
-        <p className="text-[var(--color-mist)] text-sm tracking-widest mb-6">
+        <p className="text-mist text-sm tracking-widest mb-6">
           Cultivation Simulator
         </p>
 
-        <p className="text-[var(--color-parchment-dim)] leading-relaxed text-base max-w-md mx-auto">
+        <p className="text-parchment-dim leading-relaxed text-base max-w-md mx-auto">
           每一次抉择皆关机缘，每一步修行皆是天命。<br />
-          <span className="text-[var(--color-mist)]">收集结局 · 解锁成就 · 追寻你的道</span>
+          <span className="text-mist">收集结局 · 解锁成就 · 追寻你的道</span>
         </p>
 
         {meta.totalRuns > 0 && (
@@ -104,9 +104,9 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
         className="w-full max-w-sm space-y-5 animate-fade-up relative z-10"
         style={{ animationDelay: '0.15s' }}
       >
-        <div className="border border-[var(--color-jade)]/30 bg-[rgba(12,15,13,0.5)] p-5 rounded-sm space-y-4">
+        <div className="scroll-panel border border-jade/30 bg-ink/50 p-5 rounded-sm space-y-4">
           <div>
-            <label htmlFor="dao-hao" className="block text-sm text-[var(--color-mist)] mb-2 tracking-wider">
+            <label htmlFor="dao-hao" className="block text-sm text-mist mb-2 tracking-wider">
               道号
             </label>
             <input
@@ -118,38 +118,38 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
               placeholder="请输入你的名字"
               maxLength={12}
               autoComplete="off"
-              className="w-full px-4 py-3 bg-[#0a0d0c] border border-[var(--color-jade)]/40 rounded-sm
-                text-[var(--color-parchment)] text-base
-                focus:outline-none focus:border-[var(--color-gold)] focus:ring-1 focus:ring-[var(--color-gold)]/30
-                placeholder:text-[var(--color-mist)]/50 transition-colors"
+              className="w-full px-4 py-3 bg-ink-deep border border-jade/40 rounded-sm
+                text-parchment text-base
+                focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30
+                placeholder:text-mist/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-[var(--color-mist)] mb-2 tracking-wider">出身</label>
+            <label className="block text-sm text-mist mb-2 tracking-wider">出身</label>
             <OriginPicker value={origin} onChange={setOrigin} />
           </div>
 
           <div className="space-y-2.5 pt-1">
-            <label className="flex items-center gap-3 text-sm text-[var(--color-parchment-dim)] cursor-pointer group">
+            <label className="flex items-center gap-3 text-sm text-parchment-dim cursor-pointer group">
               <input
                 type="checkbox"
                 checked={dailyMode}
                 onChange={(e) => setDailyMode(e.target.checked)}
-                className="group-hover:border-[var(--color-gold)]/50 transition-colors"
+                className="group-hover:border-gold/50 transition-colors"
               />
-              <span>今日天命 <span className="text-[var(--color-mist)] text-xs">每日固定机缘种子</span></span>
+              <span>今日天命 <span className="text-mist text-xs">每日固定机缘种子</span></span>
             </label>
 
             {meta.innateBodyUnlocked && (
-              <label className="flex items-center gap-3 text-sm text-[var(--color-gold-dim)] cursor-pointer group">
+              <label className="flex items-center gap-3 text-sm text-gold-dim cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={useInnateBody}
                   onChange={(e) => setUseInnateBody(e.target.checked)}
-                  className="group-hover:border-[var(--color-gold)]/50 transition-colors"
+                  className="group-hover:border-gold/50 transition-colors"
                 />
-                <span>先天道体 <span className="text-[var(--color-mist)] text-xs">根骨悟性略增</span></span>
+                <span>先天道体 <span className="text-mist text-xs">根骨悟性略增</span></span>
               </label>
             )}
           </div>
@@ -157,10 +157,10 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
 
         <button
           type="submit"
-          className="w-full py-3.5 min-h-[44px] bg-[var(--color-cinnabar)] hover:bg-[var(--color-cinnabar-glow)]
-            text-[var(--color-parchment)] font-semibold tracking-[0.3em] rounded-sm
-            transition-all cursor-pointer border border-[var(--color-cinnabar-glow)]/50
-            hover:shadow-[0_0_20px_rgba(184,58,42,0.2)] active:scale-[0.98]"
+          className="w-full py-3.5 min-h-[44px] bg-cinnabar hover:bg-cinnabar-glow
+            text-parchment font-semibold tracking-[0.3em] rounded-sm
+            transition-all cursor-pointer border border-cinnabar-glow/50
+            hover:shadow-glow-cinnabar active:scale-[0.98]"
         >
           踏入仙途
         </button>

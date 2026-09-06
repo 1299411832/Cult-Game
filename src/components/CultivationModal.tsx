@@ -37,16 +37,16 @@ export function CultivationModal({ player, onClose }: Props) {
     >
       <div
         data-overlay="false"
-        className="max-w-sm w-full border border-[var(--color-jade)]/40 bg-[var(--color-ink)] p-5 flex flex-col"
+        className="max-w-sm w-full border border-jade/40 bg-ink p-5 flex flex-col"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg text-[var(--color-gold)]" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-lg text-gold" style={{ fontFamily: 'var(--font-display)' }}>
             ⚔ 修炼体系
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="text-xs text-[var(--color-mist)] hover:text-[var(--color-parchment)] cursor-pointer border border-[var(--color-mist)]/20 px-2 py-1 rounded-sm"
+            className="text-xs text-mist hover:text-parchment cursor-pointer border border-mist/20 px-2 py-1 rounded-sm"
           >
             关闭
           </button>
@@ -56,9 +56,9 @@ export function CultivationModal({ player, onClose }: Props) {
           {items.map((item) => (
             <div
               key={item.label}
-              className="flex items-center justify-between text-sm px-3 py-2 bg-[rgba(0,0,0,0.2)] rounded-sm"
+              className="flex items-center justify-between text-sm px-3 py-2 bg-black/20 rounded-sm"
             >
-              <span className="text-[var(--color-mist)]">{item.label}</span>
+              <span className="text-mist">{item.label}</span>
               <span style={{ color: item.color }}>{item.value}</span>
             </div>
           ))}
@@ -67,10 +67,10 @@ export function CultivationModal({ player, onClose }: Props) {
         {/* 功法列表 */}
         {sys.techniques.length > 0 && (
           <div className="mt-4">
-            <p className="text-xs text-[var(--color-mist)] mb-1.5">已习得功法</p>
+            <p className="text-xs text-mist mb-1.5">已习得功法</p>
             <div className="flex flex-wrap gap-1.5">
               {sys.techniques.map((name, i) => (
-                <span key={i} className="text-xs px-2 py-0.5 border border-[var(--color-jade)]/20 rounded-sm text-[var(--color-jade-light)]">
+                <span key={i} className="text-xs px-2 py-0.5 border border-jade/20 rounded-sm text-jade-light">
                   {name}
                 </span>
               ))}
@@ -81,10 +81,10 @@ export function CultivationModal({ player, onClose }: Props) {
         {/* 神兵列表 */}
         {sys.divineWeapons.length > 0 && (
           <div className="mt-3">
-            <p className="text-xs text-[var(--color-mist)] mb-1.5">已铸神兵</p>
+            <p className="text-xs text-mist mb-1.5">已铸神兵</p>
             <div className="flex flex-wrap gap-1.5">
               {sys.divineWeapons.map((name, i) => (
-                <span key={i} className="text-xs px-2 py-0.5 border border-[var(--color-gold)]/20 rounded-sm text-[var(--color-gold)]">
+                <span key={i} className="text-xs px-2 py-0.5 border border-gold/20 rounded-sm text-gold">
                   {name}
                 </span>
               ))}

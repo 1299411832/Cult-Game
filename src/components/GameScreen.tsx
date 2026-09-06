@@ -37,7 +37,7 @@ export function GameScreen({ session, onChoose, soundOn, onToggleSound, onAbando
   if (!currentEvent) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-mist)] tracking-widest">天道渺渺，机缘未至……</p>
+        <p className="text-mist tracking-widest">天道渺渺，机缘未至……</p>
       </div>
     )
   }
@@ -51,9 +51,9 @@ export function GameScreen({ session, onChoose, soundOn, onToggleSound, onAbando
             type="button"
             onClick={onRewind}
             title="回溯到上一个选择（每局仅限一次）"
-            className="text-sm text-[var(--color-gold)] hover:text-[var(--color-gold-dim)] transition-colors cursor-pointer
-              w-8 h-8 flex items-center justify-center rounded-full border border-[var(--color-gold)]/30 hover:border-[var(--color-gold)]/60
-              hover:bg-[var(--color-gold)]/5"
+            className="text-sm text-gold hover:text-gold-dim transition-colors cursor-pointer
+              w-8 h-8 flex items-center justify-center rounded-full border border-gold/30 hover:border-gold/60
+              hover:bg-gold/5"
           >
             🔄
           </button>
@@ -63,8 +63,8 @@ export function GameScreen({ session, onChoose, soundOn, onToggleSound, onAbando
           type="button"
           onClick={onToggleSound}
           aria-label={soundOn ? '关闭音效' : '开启音效'}
-          className="text-sm text-[var(--color-mist)] hover:text-[var(--color-gold)] transition-colors cursor-pointer
-            w-8 h-8 flex items-center justify-center rounded-full border border-[var(--color-mist)]/20 hover:border-[var(--color-gold)]/40"
+          className="text-sm text-mist hover:text-gold transition-colors cursor-pointer
+            w-8 h-8 flex items-center justify-center rounded-full border border-mist/20 hover:border-gold/40"
         >
           {soundOn ? '🔔' : '🔕'}
         </button>
@@ -73,15 +73,19 @@ export function GameScreen({ session, onChoose, soundOn, onToggleSound, onAbando
       <StatusPanel player={player} turn={turn} onUseItem={onUseItem} />
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-4 sm:gap-6 lg:gap-7">
-        <main className="scroll-panel mist-overlay border border-[var(--color-jade)]/30 bg-[rgba(12,15,13,0.65)] p-5 sm:p-7 rounded-sm shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
-          <EventCard event={currentEvent} />
-          <div className="divider-ornament my-6">
-            <span className="ornament-dot" />
+        <main className="scroll-panel mist-overlay relative border border-jade/30 bg-ink/65 p-5 sm:p-7 rounded-sm shadow-panel">
+          <div className="spirit-motes" aria-hidden="true" />
+          <div className="relative z-10">
+            <EventCard event={currentEvent} />
+            <div className="divider-ornament my-6">
+              <span className="ornament-dot" />
+            </div>
+            <ChoiceList choices={currentEvent.choices} player={player} onChoose={onChoose} />
           </div>
-          <ChoiceList choices={currentEvent.choices} player={player} onChoose={onChoose} />
         </main>
 
-        <aside className="scroll-panel mist-overlay border border-[var(--color-jade)]/20 bg-[rgba(12,15,13,0.5)] p-4 sm:p-5 rounded-sm flex flex-col min-h-0 lg:max-h-[calc(100vh-10rem)] shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
+        {/* 侧栏不再叠四角描金与云纹，装饰只留给主叙事面板 */}
+        <aside className="border border-jade/20 bg-ink/50 p-4 sm:p-5 rounded-sm flex flex-col min-h-0 lg:max-h-[calc(100vh-10rem)] shadow-panel-sm">
           <LogPanel logs={player.log} playerName={player.name} />
         </aside>
       </div>

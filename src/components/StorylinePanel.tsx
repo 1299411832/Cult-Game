@@ -4,24 +4,24 @@ import type { PlayerState } from '../types/game'
 
 const TONE_COLORS: Record<string, { bar: string; text: string; border: string }> = {
   jade: {
-    bar: 'bg-[var(--color-jade)]',
-    text: 'text-[var(--color-jade-light)]',
-    border: 'border-[var(--color-jade)]/20',
+    bar: 'bg-jade',
+    text: 'text-jade-light',
+    border: 'border-jade/20',
   },
   gold: {
-    bar: 'bg-[var(--color-gold)]',
-    text: 'text-[var(--color-gold)]',
-    border: 'border-[var(--color-gold)]/20',
+    bar: 'bg-gold',
+    text: 'text-gold',
+    border: 'border-gold/20',
   },
   cinnabar: {
-    bar: 'bg-[var(--color-cinnabar)]',
-    text: 'text-[var(--color-cinnabar-glow)]',
-    border: 'border-[var(--color-cinnabar)]/20',
+    bar: 'bg-cinnabar',
+    text: 'text-cinnabar-glow',
+    border: 'border-cinnabar/20',
   },
   mist: {
-    bar: 'bg-[var(--color-mist)]',
-    text: 'text-[var(--color-mist)]',
-    border: 'border-[var(--color-mist)]/20',
+    bar: 'bg-mist',
+    text: 'text-mist',
+    border: 'border-mist/20',
   },
 }
 
@@ -47,24 +47,24 @@ export function StorylinePanel({ player, open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4" onClick={onClose}>
       <div
-        className="max-w-lg w-full h-[520px] border border-[var(--color-jade)]/40 bg-[var(--color-ink)] p-6 rounded-sm animate-slide-up flex flex-col"
+        className="max-w-lg w-full h-[520px] border border-jade/40 bg-ink p-6 rounded-sm animate-slide-up flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl text-[var(--color-gold)]" style={{ fontFamily: 'var(--font-display)' }}>
+          <h3 className="text-xl text-gold" style={{ fontFamily: 'var(--font-display)' }}>
             📜 剧情线
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="text-sm text-[var(--color-mist)] hover:text-[var(--color-parchment)] cursor-pointer border border-[var(--color-mist)]/20 px-3 py-1 rounded-sm"
+            className="text-sm text-mist hover:text-parchment cursor-pointer border border-mist/20 px-3 py-1 rounded-sm"
           >
             关闭
           </button>
         </div>
 
         {sorted.length === 0 ? (
-          <p className="text-sm text-[var(--color-mist)] text-center py-4 flex-1 flex items-center justify-center">
+          <p className="text-sm text-mist text-center py-4 flex-1 flex items-center justify-center">
             尚无剧情线开启，做出选择后将逐步解锁……
           </p>
         ) : (
@@ -77,12 +77,12 @@ export function StorylinePanel({ player, open, onClose }: Props) {
                     <span className={`text-sm font-medium ${colors.text}`}>
                       {sp.storyline.name}
                     </span>
-                    <span className="text-xs text-[var(--color-mist)]">
+                    <span className="text-xs text-mist">
                       {sp.completedSteps}/{sp.totalSteps}
                     </span>
                   </div>
 
-                  <div className="h-1.5 bg-[rgba(0,0,0,0.3)] rounded-full overflow-hidden mb-2">
+                  <div className="h-1.5 bg-black/30 rounded-full overflow-hidden mb-2">
                     <div
                       className={`h-full ${colors.bar} transition-all duration-500 rounded-full`}
                       style={{ width: `${sp.percent}%` }}
@@ -100,8 +100,8 @@ export function StorylinePanel({ player, open, onClose }: Props) {
                             done
                               ? `${colors.text} opacity-80`
                               : isCurrent
-                                ? 'text-[var(--color-parchment)] border border-[var(--color-gold)]/30'
-                                : 'text-[var(--color-mist)]/40'
+                                ? 'text-parchment border border-gold/30'
+                                : 'text-mist/40'
                           }`}
                         >
                           {done ? '✓' : isCurrent ? '►' : '○'} {step.label}
@@ -111,7 +111,7 @@ export function StorylinePanel({ player, open, onClose }: Props) {
                   </div>
 
                   {sp.nextLabel && (
-                    <p className="text-xs text-[var(--color-mist)]/60 mt-2 italic">
+                    <p className="text-xs text-mist/60 mt-2 italic">
                       下一步：{sp.nextLabel}
                     </p>
                   )}

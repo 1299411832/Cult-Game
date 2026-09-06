@@ -34,7 +34,7 @@ export function CultivationSystemsPanel({ player }: Props) {
   if (items.length === 0) return null
 
   return (
-    <p className="mt-2 text-xs text-[var(--color-jade-light)]/90 leading-relaxed">
+    <p className="mt-2 text-xs text-jade-light/90 leading-relaxed">
       修行：{items.join(' · ')}
     </p>
   )

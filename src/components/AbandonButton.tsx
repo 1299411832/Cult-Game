@@ -21,7 +21,7 @@ export function AbandonButton({ onAbandon }: Props) {
       <button
         type="button"
         onClick={() => setShow(true)}
-        className="text-sm text-[var(--color-mist)] hover:text-[var(--color-cinnabar-glow)] transition-colors cursor-pointer"
+        className="text-sm text-mist hover:text-cinnabar-glow transition-colors cursor-pointer"
       >
         弃道归去
       </button>
@@ -32,27 +32,27 @@ export function AbandonButton({ onAbandon }: Props) {
           onClick={() => setShow(false)}
         >
           <div
-            className="max-w-sm w-full border border-[var(--color-jade)]/40 bg-[var(--color-ink)] p-6 rounded-sm text-center animate-fade-up"
+            className="max-w-sm w-full border border-jade/40 bg-ink p-6 rounded-sm text-center animate-fade-up"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-label="确认弃道"
           >
             <p
-              className="text-xl text-[var(--color-parchment)] mb-2"
+              className="text-xl text-parchment mb-2"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               确认弃道？
             </p>
-            <p className="text-sm text-[var(--color-mist)] mb-6">
+            <p className="text-sm text-mist mb-6">
               当前修行进度将丢失，不可恢复。
             </p>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={() => setShow(false)}
-                className="flex-1 py-2.5 min-h-[44px] border border-[var(--color-mist)]/30 rounded-sm
-                  text-[var(--color-mist)] hover:text-[var(--color-parchment)] hover:border-[var(--color-mist)]/60
+                className="flex-1 py-2.5 min-h-[44px] border border-mist/30 rounded-sm
+                  text-mist hover:text-parchment hover:border-mist/60
                   cursor-pointer transition-colors"
               >
                 继续修行
@@ -60,9 +60,9 @@ export function AbandonButton({ onAbandon }: Props) {
               <button
                 type="button"
                 onClick={onAbandon}
-                className="flex-1 py-2.5 min-h-[44px] bg-[var(--color-cinnabar)] hover:bg-[var(--color-cinnabar-glow)]
-                  text-[var(--color-parchment)] rounded-sm cursor-pointer transition-colors
-                  border border-[var(--color-cinnabar-glow)]/50"
+                className="flex-1 py-2.5 min-h-[44px] bg-cinnabar hover:bg-cinnabar-glow
+                  text-parchment rounded-sm cursor-pointer transition-colors
+                  border border-cinnabar-glow/50"
               >
                 确认弃道
               </button>

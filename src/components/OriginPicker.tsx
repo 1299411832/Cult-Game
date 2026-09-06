@@ -40,19 +40,19 @@ export function OriginPicker({ value, onChange }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="w-full px-4 py-3 bg-[#0a0d0c] border border-[var(--color-jade)]/40 rounded-sm
-          flex items-center justify-between gap-3 text-base text-[var(--color-parchment)] cursor-pointer
-          hover:border-[var(--color-jade-light)] focus:outline-none focus:border-[var(--color-gold)] focus:ring-1 focus:ring-[var(--color-gold)]/30
+        className="w-full px-4 py-3 bg-ink-deep border border-jade/40 rounded-sm
+          flex items-center justify-between gap-3 text-base text-parchment cursor-pointer
+          hover:border-jade-light focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30
           transition-colors"
       >
         <span className="shrink-0">{selected.label}</span>
-        <span className="text-xs text-[var(--color-mist)] truncate text-right hidden sm:inline">{selected.desc}</span>
+        <span className="text-xs text-mist truncate text-right hidden sm:inline">{selected.desc}</span>
       </button>
 
       {open && (
         <ul
-          className="absolute z-20 bottom-full mb-1 w-full max-h-60 overflow-y-auto border border-[var(--color-jade)]/40 bg-[#0a0d0c] rounded-sm
-            shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+          className="absolute z-20 bottom-full mb-1 w-full max-h-60 overflow-y-auto border border-jade/40 bg-ink-deep rounded-sm
+            shadow-lift"
           role="listbox"
         >
           {OPTIONS.map((opt) => {
@@ -67,13 +67,13 @@ export function OriginPicker({ value, onChange }: Props) {
                   }}
                   className={`w-full px-4 py-2.5 flex items-center justify-between gap-3 cursor-pointer transition-colors
                     ${active
-                      ? 'bg-[var(--color-jade)]/60 text-[var(--color-parchment)]'
-                      : 'text-[var(--color-parchment)] hover:bg-[#1c2420]'
+                      ? 'bg-jade/60 text-parchment'
+                      : 'text-parchment hover:bg-ink-raised'
                     }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-3 min-w-0">
                     <span className="shrink-0 text-sm">{opt.label}</span>
-                    <span className={`text-xs ${active ? 'text-[var(--color-parchment-dim)]' : 'text-[var(--color-mist)]'}`}>
+                    <span className={`text-xs ${active ? 'text-parchment-dim' : 'text-mist'}`}>
                       {opt.desc}
                     </span>
                   </div>

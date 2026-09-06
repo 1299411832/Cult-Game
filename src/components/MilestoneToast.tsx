@@ -7,10 +7,10 @@ interface Props {
 }
 
 const TONE: Record<Milestone['type'], string> = {
-  breakthrough: 'text-[var(--color-gold)] border-[var(--color-gold)]',
-  lifespan_low: 'text-[var(--color-cinnabar)] border-[var(--color-cinnabar)]',
-  cultivation_full: 'text-[var(--color-jade-light)] border-[var(--color-jade-light)]',
-  rare_event: 'text-[var(--color-cinnabar-glow)] border-[var(--color-cinnabar-glow)]',
+  breakthrough: 'text-gold border-gold',
+  lifespan_low: 'text-cinnabar border-cinnabar',
+  cultivation_full: 'text-jade-light border-jade-light',
+  rare_event: 'text-cinnabar-glow border-cinnabar-glow',
 }
 
 export function MilestoneToast({ milestone, onDismiss }: Props) {
@@ -32,7 +32,7 @@ export function MilestoneToast({ milestone, onDismiss }: Props) {
       role="presentation"
     >
       <div
-        className={`max-w-md w-full border-2 bg-[rgba(12,15,13,0.95)] px-8 py-6 rounded-sm text-center animate-milestone-enter ${TONE[milestone.type]}`}
+        className={`max-w-md w-full border-2 bg-ink/95 px-8 py-6 rounded-sm text-center animate-milestone-enter ${TONE[milestone.type]}`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-label="里程碑通知"
@@ -44,7 +44,7 @@ export function MilestoneToast({ milestone, onDismiss }: Props) {
         <button
           type="button"
           onClick={onDismiss}
-          className="mt-6 text-sm text-[var(--color-mist)] hover:text-[var(--color-parchment)] cursor-pointer"
+          className="mt-6 text-sm text-mist hover:text-parchment cursor-pointer"
         >
           继续
         </button>

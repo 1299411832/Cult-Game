@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project local / build cache
+.workbuddy/
+.font-cache/

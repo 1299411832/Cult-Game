@@ -93,8 +93,8 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
     <div className="h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12 relative overflow-hidden safe-bottom">
       {/* 背景装饰 */}
       <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-[var(--color-jade)]/[0.05] blur-3xl" />
-        <div className="absolute bottom-[5%] left-[30%] w-[400px] h-[400px] rounded-full bg-[var(--color-cinnabar)]/[0.03] blur-3xl" />
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-jade/[0.05] blur-3xl" />
+        <div className="absolute bottom-[5%] left-[30%] w-[400px] h-[400px] rounded-full bg-cinnabar/[0.03] blur-3xl" />
       </div>
 
       {/* 右上角弃道按钮 */}
@@ -102,7 +102,7 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
         <button
           type="button"
           onClick={onAbandon}
-          className="text-sm text-[var(--color-mist)] hover:text-[var(--color-cinnabar-glow)] transition-colors cursor-pointer"
+          className="text-sm text-mist hover:text-cinnabar-glow transition-colors cursor-pointer"
         >
           弃道归去
         </button>
@@ -116,12 +116,12 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
             type="button"
             onClick={() => goToPage(i)}
             className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer transition-all ${
-              i === page ? 'text-[var(--color-gold)]' : 'text-[var(--color-mist)]/40 hover:text-[var(--color-mist)]/70'
+              i === page ? 'text-gold' : 'text-mist/40 hover:text-mist/70'
             }`}
           >
             <span
               className={`block rounded-full transition-all ${
-                i === page ? 'w-6 h-2 bg-[var(--color-gold)]' : 'w-2 h-2 bg-current'
+                i === page ? 'w-6 h-2 bg-gold' : 'w-2 h-2 bg-current'
               }`}
             />
           </button>
@@ -130,9 +130,9 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
 
       {/* 内容区域 — 固定高度 */}
       <div className="w-full max-w-lg relative z-10 shrink-0">
-        <div className="border border-[var(--color-jade)]/30 bg-[rgba(12,15,13,0.6)] p-6 sm:p-8 rounded-sm mb-8 h-[380px] sm:h-[400px] flex flex-col overflow-hidden">
+        <div className="border border-jade/30 bg-ink/60 p-6 sm:p-8 rounded-sm mb-8 h-[380px] sm:h-[400px] flex flex-col overflow-hidden">
           <h2
-            className="text-2xl sm:text-3xl text-[var(--color-gold)] mb-6 text-center shrink-0"
+            className="text-2xl sm:text-3xl text-gold mb-6 text-center shrink-0"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {current.title}
@@ -142,11 +142,11 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
               {paragraphs.map((para, i) => (
                 <p
                   key={i}
-                  className="text-[var(--color-parchment-dim)] leading-[1.9] text-sm sm:text-base"
+                  className="text-parchment-dim leading-[1.9] text-sm sm:text-base"
                 >
                   {para}
                   {i === paragraphs.length - 1 && isTyping && (
-                    <span className="inline-block w-[2px] h-[1em] bg-[var(--color-gold)] ml-0.5 align-middle animate-pulse" />
+                    <span className="inline-block w-[2px] h-[1em] bg-gold ml-0.5 align-middle animate-pulse" />
                   )}
                 </p>
               ))}
@@ -160,8 +160,8 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
             <button
               type="button"
               onClick={handlePrev}
-              className="flex-1 py-3 min-h-[44px] border border-[var(--color-mist)]/30 rounded-sm
-                text-[var(--color-mist)] hover:text-[var(--color-parchment)] hover:border-[var(--color-mist)]/60
+              className="flex-1 py-3 min-h-[44px] border border-mist/30 rounded-sm
+                text-mist hover:text-parchment hover:border-mist/60
                 cursor-pointer transition-all tracking-wider"
             >
               上一页
@@ -171,8 +171,8 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
             <button
               type="button"
               onClick={handleNext}
-              className="flex-1 py-3 min-h-[44px] border border-[var(--color-jade)]/40 rounded-sm
-                text-[var(--color-parchment-dim)] hover:text-[var(--color-parchment)] hover:border-[var(--color-jade-light)]
+              className="flex-1 py-3 min-h-[44px] border border-jade/40 rounded-sm
+                text-parchment-dim hover:text-parchment hover:border-jade-light
                 cursor-pointer transition-all tracking-wider"
             >
               {isTyping ? '跳过当前' : '下一页'}
@@ -182,10 +182,10 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
             <button
               type="button"
               onClick={handleSkipAll}
-              className="flex-1 py-3 min-h-[44px] bg-[var(--color-cinnabar)] hover:bg-[var(--color-cinnabar-glow)]
-                text-[var(--color-parchment)] tracking-[0.2em] rounded-sm transition-all cursor-pointer
-                border border-[var(--color-cinnabar-glow)]/50
-                hover:shadow-[0_0_20px_rgba(184,58,42,0.2)] active:scale-[0.98]"
+              className="flex-1 py-3 min-h-[44px] bg-cinnabar hover:bg-cinnabar-glow
+                text-parchment tracking-[0.2em] rounded-sm transition-all cursor-pointer
+                border border-cinnabar-glow/50
+                hover:shadow-glow-cinnabar active:scale-[0.98]"
             >
               跳过全部
             </button>
@@ -194,10 +194,10 @@ export function LoreScreen({ onContinue, onAbandon }: Props) {
             <button
               type="button"
               onClick={onContinue}
-              className="flex-1 py-3 min-h-[44px] bg-[var(--color-cinnabar)] hover:bg-[var(--color-cinnabar-glow)]
-                text-[var(--color-parchment)] tracking-[0.2em] rounded-sm transition-all cursor-pointer
-                border border-[var(--color-cinnabar-glow)]/50
-                hover:shadow-[0_0_20px_rgba(184,58,42,0.2)] active:scale-[0.98]"
+              className="flex-1 py-3 min-h-[44px] bg-cinnabar hover:bg-cinnabar-glow
+                text-parchment tracking-[0.2em] rounded-sm transition-all cursor-pointer
+                border border-cinnabar-glow/50
+                hover:shadow-glow-cinnabar active:scale-[0.98]"
             >
               开始修行
             </button>

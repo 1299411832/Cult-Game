@@ -92,6 +92,6 @@ export function highlightLogEntry(text: string): LogSegment[] {
 }
 
 export const LOG_TONE_CLASS: Record<LogTone, string> = {
-  gain: 'text-[var(--color-gold)] font-medium',
-  loss: 'text-[var(--color-cinnabar-glow)] font-medium',
+  gain: 'text-gold font-medium',
+  loss: 'text-cinnabar-glow font-medium',
 }

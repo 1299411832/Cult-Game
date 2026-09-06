@@ -34,17 +34,17 @@ export function AchievementToast({ ids, onDismiss }: Props) {
       {items.map((a) => (
         <div
           key={a.id}
-          className="border border-[var(--color-gold)] bg-[rgba(12,15,13,0.95)] px-4 py-3 rounded-sm animate-fade-up"
+          className="border border-gold bg-ink/95 px-4 py-3 rounded-sm animate-fade-up"
         >
-          <p className="text-xs text-[var(--color-gold)] tracking-wider">成就解锁</p>
-          <p className="text-[var(--color-parchment)] font-semibold">{a.title}</p>
-          <p className="text-xs text-[var(--color-mist)]">{a.description}</p>
+          <p className="text-xs text-gold tracking-wider">成就解锁</p>
+          <p className="text-parchment font-semibold">{a.title}</p>
+          <p className="text-xs text-mist">{a.description}</p>
         </div>
       ))}
       <button
         type="button"
         onClick={onDismiss}
-        className="w-full text-center text-xs text-[var(--color-mist)] py-1 cursor-pointer"
+        className="w-full text-center text-xs text-mist py-1 cursor-pointer"
       >
         关闭
       </button>
