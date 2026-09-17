@@ -60,7 +60,7 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
       <div className="text-center max-w-lg mb-10 animate-fade-up relative z-10">
         <div className="flex items-center justify-center gap-4 mb-5">
           <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/40" />
-          <p className="text-gold-dim text-xs tracking-[0.5em] uppercase">天道渺渺 · 仙途漫漫</p>
+          <p className="text-gold-dim text-xs tracking-[0.5em] uppercase">天道渺渺 · 迷体叹镜</p>
           <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold/40" />
         </div>
 
@@ -68,7 +68,7 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
           className="text-6xl md:text-8xl mb-3 title-shimmer leading-tight"
           style={{ fontFamily: 'var(--font-display)' }}
         >
-          修仙模拟器
+          迷体修仙录
         </h1>
 
         <p className="text-mist text-sm tracking-widest mb-6">
@@ -76,8 +76,8 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
         </p>
 
         <p className="text-parchment-dim leading-relaxed text-base max-w-md mx-auto">
-          每一次抉择皆关机缘，每一步修行皆是天命。<br />
-          <span className="text-mist">收集结局 · 解锁成就 · 追寻你的道</span>
+          记得天天来报道，每一步修行皆是天命。<br />
+          <span className="text-mist">迷体打卡 · 解锁成就 · 追寻你的迷体星球</span>
         </p>
 
         {meta.totalRuns > 0 && (
