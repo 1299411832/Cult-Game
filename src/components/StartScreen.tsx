@@ -115,7 +115,7 @@ export function StartScreen({ onStart, soundOn, onToggleSound }: Props) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="请输入你的名字"
+              placeholder="请输入你的迷体名字"
               maxLength={12}
               autoComplete="off"
               className="w-full px-4 py-3 bg-ink-deep border border-jade/40 rounded-sm
